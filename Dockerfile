@@ -9,5 +9,5 @@ RUN dart_frog build
 
 RUN dart compile exe build/bin/server.dart -o build/bin/server
 
-
+# You may need this if you aren't using Heroku:
 # CMD ["/app/build/bin/server"]
