@@ -8,12 +8,17 @@ A simple URL shortener written in dart.
 
 ### Getting Started
 
+#### Activate dart_frog_cli
 ```
 dart pub global activate dart_frog_cli
+```
+
+#### Run Docker Compose (for PG)
+```
 docker-compose up -d
 ```
 
-### Env
+#### Config
 ```
 touch .env
 ```
@@ -24,12 +29,8 @@ DATABASE_NO_SSL=true
 FALLBACK_URL=https://google.com
 ```
 
-### Running
-```
-dart_frog dev
-```
 
-### SQL
+#### SQL
 
 Link table:
 ```
@@ -52,11 +53,48 @@ CREATE TABLE click (
 );
 ```
 
+### Running
+```
+dart_frog dev
+```
+
+### API Endpoints
+
+`GET /api`
+Returns the status `{"online": "true"}`
+
+`GET /link`
+Returns all links in the database
+
+`GET /link?short_code=SHORT_CODE`
+Returns a serialized link or a 404
+
+`POST /link` 
+Post Params: `{'url':'URL_TO_SHORTEN'}`
+Creates a new link and returns the serialized link
+
+
+
+### Depoying
+You can follow the [dart_frog docs](https://dartfrog.vgv.dev/docs/category/deploy) to deploy. 
+
+For Heroku, follow these steps:
+* Create Heroku app
+* Add the Heroku Postgres addon
+* Run:
+```
+heroku git:remote -a {{YOUR APP NAME}}
+heroku stack:set container --app {{YOUR APP NAME}}
+heroku config:set FALLBACK_URL={{YOUR FALLBACK URL}}
+git add .
+git commit -m"commit message"
+git push heroku main
+```
+
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 [![License: MIT][license_badge]][license_link]
 [![Powered by Dart Frog](https://img.shields.io/endpoint?url=https://tinyurl.com/dartfrog-badge)](https://dartfrog.vgv.dev)
 
-An example application built with dart_frog
 
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license_link]: https://opensource.org/licenses/MIT
